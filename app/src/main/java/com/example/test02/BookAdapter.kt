@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 class BookAdapter : ListAdapter<BookLibrary, BookAdapter.ProfileViewHolder>(DiffCallback()) {
 
+    private val bookLibrary : MutableList<BookLibrary> = mutableListOf()
+
     private var onItemClickListener: ((BookLibrary) -> Unit)? = null
     private var onDeleteClickListener: ((BookLibrary) -> Unit)? = null
     private var onUpdateClickListener: ((BookLibrary) -> Unit)? = null
@@ -35,6 +37,10 @@ class BookAdapter : ListAdapter<BookLibrary, BookAdapter.ProfileViewHolder>(Diff
 
     fun setOnUpdateClickListener(listener: (BookLibrary) -> Unit) {
         onUpdateClickListener = listener
+    }
+    fun getBookAtPosition(position: Int): BookLibrary {
+        return getItem(position)
+
     }
 
     inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -85,5 +91,10 @@ class BookAdapter : ListAdapter<BookLibrary, BookAdapter.ProfileViewHolder>(Diff
         override fun areContentsTheSame(oldItem: BookLibrary, newItem: BookLibrary): Boolean {
             return oldItem == newItem
         }
+    }
+
+    fun removeItem(position: Int) {
+        bookLibrary.removeAt(position)
+        notifyItemRemoved(position)
     }
 }

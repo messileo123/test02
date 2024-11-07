@@ -1,6 +1,6 @@
 package com.example.test02
+
 import android.content.Intent
-import android.graphics.Canvas
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +21,7 @@ class BookListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_list)
 
-        BookViewModel = ViewModelProvider(this).get(LibraryBookViewModel::class.java)
+       BookViewModel = ViewModelProvider(this).get(LibraryBookViewModel::class.java)
 
         val recyclerView = findViewById<RecyclerView>(R.id.profileRecyclerView)
         bookAdapter = BookAdapter()
@@ -58,9 +58,6 @@ class BookListActivity : AppCompatActivity() {
             val intent = Intent(this@BookListActivity, AddBookActivity::class.java)
             startActivity(intent)
         }
-
-        setupSwipeToDelete(recyclerView)
-
     }
 
     // Show delete confirmation dialog
@@ -94,15 +91,12 @@ class BookListActivity : AppCompatActivity() {
             ): Boolean {
                 return false
             }
-
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 val book = bookAdapter.getBookAtPosition(position)
                 BookViewModel.deleteUserProfile(book) // Deleting directly from the ViewModel
             }
-
         })
-
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 }
